@@ -9,18 +9,11 @@ namespace Catalogue.API.Products.GetProductById
         {
             app.MapGet("/products/{id}", async (Guid id, ISender mediator) =>
             {
-                try
-                {
-                    var query = new GetProductByIdQuery(id);
-                    var result = await mediator.Send(query);
+                var query = new GetProductByIdQuery(id);
+                var result = await mediator.Send(query);
 
-                    var response = result.Adapt<GetProductByIdResponse>();
-                    return Results.Ok(response);
-                }
-                catch (ProductNotFoundException)
-                {
-                    return Results.BadRequest("Product Not Found!");
-                }
+                var response = result.Adapt<GetProductByIdResponse>();
+                return Results.Ok(response);
             })
             .WithName("GetProductById")
             .Produces<GetProductByIdResponse>(StatusCodes.Status200OK)
