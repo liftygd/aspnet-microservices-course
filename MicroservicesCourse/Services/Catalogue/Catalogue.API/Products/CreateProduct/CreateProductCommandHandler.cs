@@ -1,11 +1,22 @@
-﻿using Catalogue.API.Products.GetProductById;
-
-namespace Catalogue.API.Products.CreateProduct
+﻿namespace Catalogue.API.Products.CreateProduct
 {
     public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price) : ICommand<CreateProductResult>;
     public record CreateProductResult(Guid Id);
 
-    internal class CreateProductCommandHandler(IDocumentSession session, ILogger<GetProductByIdQueryHandler> logger)
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductCommandValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Name should not be empty.");
+            RuleFor(x => x.Category).NotEmpty().WithMessage("Category required.");
+            RuleFor(x => x.ImageFile).NotEmpty().WithMessage("ImageFile required.");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price should be greater than 0.");
+        }
+    }
+
+    internal class CreateProductCommandHandler(
+        IDocumentSession session, 
+        ILogger<CreateProductCommandHandler> logger)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)

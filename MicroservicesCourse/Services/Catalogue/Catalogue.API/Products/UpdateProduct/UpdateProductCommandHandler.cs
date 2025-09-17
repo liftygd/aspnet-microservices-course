@@ -1,10 +1,21 @@
 ﻿
+using Catalogue.API.Products.CreateProduct;
 using Catalogue.API.Products.GetProductById;
 
 namespace Catalogue.API.Products.UpdateProduct
 {
     public record UpdateProductCommand(Guid Id, string Name, List<string> Category, string Description, string ImageFile, decimal Price) : ICommand<UpdateProductResult>;
     public record UpdateProductResult(bool IsSuccess);
+
+    public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+    {
+        public UpdateProductCommandValidator()
+        {
+            RuleFor(x => x.Id).NotEmpty().WithMessage("Product ID required.");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Name should not be empty.");
+            RuleFor(x => x.Price).GreaterThan(0).WithMessage("Price should be greater than 0.");
+        }
+    }
 
     internal class UpdateProductCommandHandler(IDocumentSession session, ILogger<GetProductByIdQueryHandler> logger)
         : ICommandHandler<UpdateProductCommand, UpdateProductResult>
