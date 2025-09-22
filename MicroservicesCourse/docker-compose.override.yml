@@ -1,4 +1,5 @@
 services:
+  #catalogue microservice
   catalogue.db:
     container_name: catalogue.db
     environment:
@@ -25,3 +26,16 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  #basket microservice
+  basket.db:
+    container_name: basket.db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=BasketDB
+    restart: always
+    ports:
+      -  "5433:5432"
+    volumes:
+      - postgres_basket:/var/lib/postgresql/data/

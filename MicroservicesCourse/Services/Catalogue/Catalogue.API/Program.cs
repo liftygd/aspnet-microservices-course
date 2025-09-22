@@ -27,7 +27,6 @@ if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogueInitialData>();
 
 builder.Services.AddValidatorsFromAssembly(assembly);
-
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
@@ -37,7 +36,6 @@ var app = builder.Build();
 
 //Middleware
 app.MapCarter();
-
 app.UseExceptionHandler(options => { });
 
 app.UseHealthChecks("/health", 

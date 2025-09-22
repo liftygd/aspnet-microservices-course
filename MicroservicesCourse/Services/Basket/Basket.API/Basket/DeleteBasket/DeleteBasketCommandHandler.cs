@@ -1,4 +1,5 @@
-﻿using BuildingBlocks.CQRS;
+﻿using Basket.API.Data;
+using BuildingBlocks.CQRS;
 using FluentValidation;
 
 namespace Basket.API.Basket.DeleteBasket
@@ -14,14 +15,13 @@ namespace Basket.API.Basket.DeleteBasket
         }
     }
 
-    internal class DeleteBasketCommandHandler
+    internal class DeleteBasketCommandHandler(IBasketRepository repository)
         : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
     {
         public async Task<DeleteBasketResult> Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
         {
-            //TODO: get and delete from db
-
-            return new DeleteBasketResult(true);
+            var isSuccess = await repository.DeleteBasket(command.UserName, cancellationToken);
+            return new DeleteBasketResult(isSuccess);
         }
     }
 }
