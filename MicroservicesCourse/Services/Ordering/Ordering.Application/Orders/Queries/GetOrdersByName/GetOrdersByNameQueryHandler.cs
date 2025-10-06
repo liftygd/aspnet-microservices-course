@@ -20,6 +20,6 @@ public class GetOrdersByNameQueryHandler(IApplicationDbContext dbContext)
             .OrderBy(o => o.OrderName.Value)
             .ToListAsync(cancellationToken);
         
-        return new GetOrdersByNameResult(orders.ToOrderDtoEnumerable());
+        return new GetOrdersByNameResult(orders.ToOrderDtoList());
     }
 }

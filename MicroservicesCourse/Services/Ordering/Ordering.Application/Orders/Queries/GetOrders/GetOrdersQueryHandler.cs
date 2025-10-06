@@ -28,7 +28,7 @@ public class GetOrdersQueryHandler(IApplicationDbContext dbContext)
             pageIndex,
             pageSize,
             totalCount,
-            orders.ToOrderDtoEnumerable());
+            orders.ToOrderDtoList());
         
         return new GetOrdersResult(paginatedResult);
     }

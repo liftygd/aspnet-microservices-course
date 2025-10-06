@@ -5,12 +5,16 @@ namespace Ordering.Application.Extensions;
 
 public static class OrderExtensions
 {
-    public static IEnumerable<OrderDto> ToOrderDtoEnumerable(this IEnumerable<Order> orders)
+    public static List<OrderDto> ToOrderDtoList(this IEnumerable<Order> orders)
     {
+        var list = new List<OrderDto>();
+        
         foreach (var order in orders)
         {
-            yield return order.ToOrderDto();
+            list.Add(order.ToOrderDto());
         }
+
+        return list;
     }
 
     public static OrderDto ToOrderDto(this Order order)
@@ -48,7 +52,8 @@ public static class OrderExtensions
             BillingAddress: billingAddress,
             Payment: payment,
             Status: order.Status,
-            OrderItems: order.OrderItems.Select(oi => new OrderItemDto(
+            OrderItems: order.OrderItems
+                .Select(oi => new OrderItemDto(
                     oi.OrderId.Value,
                     oi.ProductId.Value,
                     oi.Quantity,

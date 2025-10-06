@@ -6,4 +6,4 @@ namespace Ordering.Application.Orders.Queries.GetOrdersByCustomer;
 public record GetOrdersByCustomerQuery(Guid CustomerId)
     : IQuery<GetOrdersByCustomerResult>;
 
-public class GetOrdersByCustomerResult(IEnumerable<OrderDto> Orders);
+public record GetOrdersByCustomerResult(IEnumerable<OrderDto> Orders);
