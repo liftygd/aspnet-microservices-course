@@ -2,6 +2,7 @@ using Basket.API.Data;
 using Basket.API.Models;
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.Messaging.MassTransit;
 using Carter;
 using Discount.Grpc;
 using FluentValidation;
@@ -57,6 +58,9 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 
     return handler;
 });
+
+//Async communication services
+builder.Services.AddMessageBroker(builder.Configuration);
 
 //Cross-cutting services
 builder.Services.AddValidatorsFromAssembly(assembly);

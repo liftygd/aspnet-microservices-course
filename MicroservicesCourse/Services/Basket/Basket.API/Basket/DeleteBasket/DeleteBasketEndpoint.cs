@@ -6,7 +6,7 @@ namespace Basket.API.Basket.DeleteBasket
 {
     public record DeleteBasketResponse(bool IsSuccess);
 
-    public class DeleteBasketEndpoints : ICarterModule
+    public class DeleteBasketEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
