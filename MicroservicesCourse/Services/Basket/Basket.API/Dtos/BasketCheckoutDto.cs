@@ -21,4 +21,15 @@ public class BasketCheckoutDto
     public string Expiration { get; set; } = null!;
     public string CVV { get; set; } = null!;
     public int PaymentMethod { get; set; } = 0;
+    
+    //Items
+    public List<BasketCheckoutItemDto> Items { get; set; } = new();
+}
+
+public class BasketCheckoutItemDto
+{
+    public Guid OrderId { get; set; } = Guid.Empty;
+    public Guid ProductId { get; set; } = Guid.Empty;
+    public int Quantity { get; set; } = 0;
+    public decimal Price { get; set; } = 0;
 }

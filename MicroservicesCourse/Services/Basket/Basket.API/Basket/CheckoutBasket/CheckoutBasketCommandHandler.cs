@@ -28,6 +28,16 @@ public class CheckoutBasketCommandHandler(IBasketRepository repository, IPublish
         var basket = await repository.GetBasket(command.BasketCheckoutDto.UserName, cancellationToken);
         if (basket == null)
             return new CheckoutBasketResult(false);
+        
+        command.BasketCheckoutDto.Items = basket.Items
+            .Select(bi => new BasketCheckoutItemDto
+            {
+                OrderId = Guid.Empty, 
+                ProductId = bi.ProductId, 
+                Quantity = bi.Quantity, 
+                Price = bi.Price
+            })
+            .ToList();
 
         var eventMessage = command.BasketCheckoutDto.Adapt<BasketCheckoutEvent>();
         eventMessage.TotalPrice = basket.TotalPrice;

@@ -9,7 +9,7 @@
         public static OrderName Of(string value)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(value);
-            ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DEFAULT_LENGTH);
+            //ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DEFAULT_LENGTH);
 
             return new OrderName(value);
         }

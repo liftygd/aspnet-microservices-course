@@ -1,6 +1,9 @@
 services:
   distributedcache:
     image: redis
+    
+  messagebroker:
+    image: rabbitmq:management
 
   catalogue.db:
     image: postgres
@@ -28,7 +31,14 @@ services:
 
   order.db:
     image: mcr.microsoft.com/mssql/server
+    
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
 volumes:
   postgres_catalogue:
   postgres_basket:
+
